@@ -1,0 +1,34 @@
+language: c
+
+services:
+  - docker
+
+env:
+  global:
+    - LUAROCKS=3.0.1
+  matrix:
+    - LUA=lua5.1
+    - LUA=lua5.2
+    - LUA=lua5.3
+
+before_install:
+  - source .travis/setenv_lua.sh
+  - luarocks install inspect
+  - luarocks install luasocket
+  - luarocks install dump
+  - luarocks install busted
+  - luarocks install cron-parser
+  - luarocks install lbase64
+  - luarocks install fun
+  - luarocks install md5
+  - luarocks install luajson
+
+install:
+  - source .travis/tarantool.sh
+  - git clone https://github.com/vvzvlad/glue.git && cd glue
+  - tarantoolctl rocks install http
+  - tarantoolctl rocks install mqtt
+  - tarantoolctl rocks install dump
+  - tarantoolctl rocks install cron-parser
+
+script: cd ./tests && bash run_tests.sh
