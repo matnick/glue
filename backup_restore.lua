@@ -124,6 +124,13 @@ function backup_restore.create_backup(comment)
       return false, message
    end
    fiber.yield()
+   result, msg = backup_restore_private.remove_space_files()
+   if (result == false) then
+      local message = "Backup failed on space-clean stage: "..(msg or "")
+      logger.add_entry(logger.ERROR, "Backup-restore system", message)
+      return false, message
+   end
+   fiber.yield()
    result = backup_restore_private.archive_dump_files(comment)
    if (result == false) then
       local message = "Backup failed on archive stage"
@@ -178,7 +185,7 @@ end
 
 
 
------------------- HTTP API functions ------------------
+------------------↓ HTTP API functions ↓------------------
 
 function backup_restore.http_api(req)
    local params = req:param()
@@ -210,6 +217,13 @@ function backup_restore.http_api(req)
       else
          return_object = req:render{ json = {result = false, error_msg = "Backups API: no create backup before restore("..(msg or "")..")"} }
       end
+   elseif (params["action"] == "create") then
+      local result, msg = backup_restore.create_backup("User created backup")
+      if (result == true) then
+         return_object = req:render{ json = {result = true, error_msg = "Backups API: backup created"} }
+      else
+         return_object = req:render{ json = {result = false, error_msg = "Backups API: no create backup("..(msg or "")..")"} }
+      end
    else
       return_object = req:render{ json = {result = false, error_msg = "Backups API: No valid action"} }
    end
@@ -221,7 +235,7 @@ end
 
 
 
------------------- Public functions ------------------
+------------------↓ Public functions ↓------------------
 
 function backup_restore.init()
    local http_system = require 'http_system'

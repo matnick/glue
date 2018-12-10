@@ -3,9 +3,11 @@ local system = {}
 
 local fio = require 'fio'
 local fiber = require 'fiber'
+local clock = require 'clock'
 local inspect = require 'libs/inspect'
 
-local git_version, _
+local git_version
+local version, version_type, _
 
 function system.reverse_table(t)
    local reversedTable = {}
@@ -18,6 +20,21 @@ end
 
 function system.round(value, rounds)
    return tonumber(string.format("%."..(tostring(rounds or 2)).."f", value))
+end
+
+function system.deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[system.deepcopy(orig_key)] = system.deepcopy(orig_value)
+        end
+        setmetatable(copy, system.deepcopy(getmetatable(orig)))
+    else
+        copy = orig
+    end
+    return copy
 end
 
 function system.random_string()
@@ -39,14 +56,32 @@ function system.print_n(data, ...)
 	io.flush()
 end
 
+function system.git_version()
+   _, _, git_version = string.find(system.os_command("git describe --dirty --always --tags"), "(%S+)%s*$")
+   git_version = git_version or "Version git error"
+   return git_version
+end
 
-function system.git_version(new_flag)
-   if (git_version == nil or new_flag == true) then
-      _, _, git_version = string.find(system.os_command("git describe --dirty --always --tags"), "(%S+)%s*$")
-      git_version = git_version or "Version git error"
-      return git_version
+function system.version()
+   if (version ~= nil and version_type ~= nil) then
+      return version, version_type
    else
-      return git_version
+      _, _, git_version = string.find(system.os_command("git describe --dirty --always --tags"), "(%S+)%s*$")
+      if (git_version == nil) then
+         local _, _, standalone_version = string.find(system.os_command("cat ./VERSION"), "(%S+)%s*$")
+         if (standalone_version == nil) then
+            version_type = "standalone"
+            version = "Version error"
+            return version, version_type
+         end
+         version_type = "standalone"
+         version = standalone_version
+         return version, version_type
+      else
+         version_type = "git"
+         version = git_version
+         return version, version_type
+      end
    end
 end
 
@@ -74,13 +109,11 @@ function system.get_files_in_dir(path, mask)
 end
 
 function system.wait_and_exit()
-   local logger = require('logger')
-   local function exit()
-      fiber.sleep(2)
-      logger.add_entry(logger.INFO, "System", 'System stopped')
-      os.exit()
-   end
-   fiber.create(exit)
+   fiber.create(function()
+      require('logger').add_entry(require('logger').INFO, "System", 'System stopped')
+      fiber.sleep(1)
+      os.exit(1)
+   end)
 end
 
 
@@ -94,22 +127,32 @@ function system.add_headers(return_object)
 end
 
 function system.concatenate_args(...)
-      local arguments = {...}
-      local msg = ""
-      local count_args = select("#", ...)
-      for i = 1, count_args do
-         local new_msg = arguments[i]
-         if (type(new_msg) == "table") then
-            new_msg = tostring(inspect(new_msg))
-         else
-            new_msg = tostring(new_msg)
-         end
-         if (new_msg ~= nil and new_msg ~= "" and type(new_msg) == "string" and type(msg) == "string") then
-            msg = msg.."\t"..new_msg
-         end
+   local arguments = {...}
+   local msg = ""
+   local count_args = select("#", ...)
+   for i = 1, count_args do
+      local new_msg = arguments[i]
+      if (type(new_msg) == "table") then
+         new_msg = tostring(inspect(new_msg))
+      else
+         new_msg = tostring(new_msg)
       end
-      return msg
+      if (new_msg ~= nil and new_msg ~= "" and type(new_msg) == "string" and type(msg) == "string") then
+         msg = msg.."\t"..new_msg
+      end
    end
+   return msg
+end
+
+
+
+function system.pcall_timecalc(call_function, ...)
+   local start_time = clock.proc64()
+   local status, returned_data = pcall(call_function, ...)
+   local end_time = clock.proc64()
+   local work_time_ms = tonumber(end_time - start_time)/1000/1000
+   return status, returned_data, work_time_ms
+end
 
 
 function system.format_seconds(elapsed_seconds)
