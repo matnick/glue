@@ -363,7 +363,7 @@ describe("Testing #logs", function()
 
 end)
 
-describe("Testing #backups", function()
+--[[describe("Testing #backups", function()
 
     test("Check backup creation, wipe and restore from backup.)", function()
         -- Save initial glial pid for further checks
@@ -452,7 +452,7 @@ describe("Testing #backups", function()
         end, logs_after_restore)
     end)
 
-end)
+end)--]]
 
 describe("Testing #functions", function()
 
