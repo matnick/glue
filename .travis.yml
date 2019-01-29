@@ -1,4 +1,4 @@
-language: lua
+language: c
 
 before_install:
   - docker build -t nokia_tarantool ./
