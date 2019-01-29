@@ -26,13 +26,13 @@ deploy:
     skip_cleanup: true
     repository: "Glial"
     username: "matuhin86"
-    token: "27f0dbab85dc1036540357053b2792f09009a0e171a20329"
+    token: $GITHUB_OAUTH_MATNICK
     package_glob: *.deb
     dist: "ubuntu/precise"
 
     provider: releases
     skip_cleanup: true
-    api_key: "c92b29f20fde1faab92a00175e2e67dfc84f86c1"
+    api_key: $PACKAGECLOUD_KEY
     file_glob: true
     file: *.deb
     on:
