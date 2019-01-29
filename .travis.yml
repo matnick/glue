@@ -1,4 +1,4 @@
-language: c
+language: lua
 
 before_install:
   - docker build -t nokia_tarantool ./
@@ -21,7 +21,6 @@ before_deploy:
   - git tag $TRAVIS_TAG
 
 deploy:
-
     provider: packagecloud
     skip_cleanup: true
     repository: "Glial"
