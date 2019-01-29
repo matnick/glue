@@ -8,8 +8,6 @@ script:
   - docker exec -i tarantool_test mkdir -p ./logs
   - docker exec -i tarantool_test busted tests.lua
   - docker exec -i tarantool_test rm -rf ../test_db
-
-after_success:
   - docker exec -i git clone https://github.com/glial-iot/glial.git
   - docker exec -i cd glial
   - docker exec -i make
