@@ -20,4 +20,3 @@ RUN tarantoolctl rocks install dump
 RUN tarantoolctl rocks install cron-parser
 
 WORKDIR /glial_dist/tests
-#EXPOSE 8080

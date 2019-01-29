@@ -8,3 +8,32 @@ script:
   - docker exec -i tarantool_test mkdir -p ./logs
   - docker exec -i tarantool_test busted tests.lua
   - docker exec -i tarantool_test rm -rf ../test_db
+
+after_success:
+  - docker exec -i git clone https://github.com/glial-iot/glial.git
+  - docker exec -i cd glial
+  - docker exec -i make
+
+before_deploy:
+  - git config --local user.name "matnick"
+  - git config --local user.email "matuhin86@gmail.com"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+
+deploy:
+
+    provider: packagecloud
+    skip_cleanup: true
+    repository: "Glial"
+    username: "matuhin86"
+    token: "27f0dbab85dc1036540357053b2792f09009a0e171a20329"
+    package_glob: *.deb
+    dist: "ubuntu/precise"
+
+    provider: releases
+    skip_cleanup: true
+    api_key: "c92b29f20fde1faab92a00175e2e67dfc84f86c1"
+    file_glob: true
+    file: *.deb
+    on:
+      tags: true
