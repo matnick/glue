@@ -1,3 +1,0 @@
-#!/bin/sh
-/usr/bin/tarantoolctl stop glue
-/usr/bin/tarantoolctl start glue

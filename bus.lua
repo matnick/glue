@@ -37,7 +37,7 @@ function bus_private.fifo_storage_worker()
       local topic, metadata = bus_private.get_value_from_fifo_s()
       if (topic ~= nil and metadata ~= nil and type(metadata) == "table") then
 
-         if (metadata.check == true and bus.get_value(topic) == tostring(metadata.value)) then
+         if (metadata.check == true and bus.get_value(topic) == tostring(metadata.value)) then --неправильная логика
             metadata.value = nil
          end
 
@@ -77,9 +77,9 @@ function bus_private.bus_rps_stat_worker()
    fiber.sleep(2)
    while true do
       if (bus.bus_saved_rps >= cycle_seconds*3) then bus.bus_saved_rps = bus.bus_saved_rps - cycle_seconds*3 end
-      bus.update{topic = "/glue/bus/fifo_saved", value = bus.fifo_saved_rps/cycle_seconds, type = "record/sec", tags={"system"}}
-      bus.update{topic = "/glue/bus/bus_saved", value = bus.bus_saved_rps/cycle_seconds, type = "record/sec", tags={"system"}}
-      bus.update{topic = "/glue/bus/fifo_max", value = bus.max_fifo_count, type = "records", tags={"system"}}
+      bus.update{topic = "/glial/bus/fifo_saved", value = bus.fifo_saved_rps/cycle_seconds, type = "record/sec", tags={"system"}}
+      bus.update{topic = "/glial/bus/bus_saved", value = bus.bus_saved_rps/cycle_seconds, type = "record/sec", tags={"system"}}
+      bus.update{topic = "/glial/bus/fifo_max", value = bus.max_fifo_count, type = "records", tags={"system"}}
       bus.fifo_saved_rps = 0
       bus.bus_saved_rps = 0
       fiber.sleep(cycle_seconds)
