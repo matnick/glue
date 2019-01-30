@@ -1,4 +1,4 @@
-FROM tarantool/tarantool:1.10.0
+FROM tarantool/tarantool:1.10.2
 
 RUN apk add --no-cache tzdata git bash lua-dev gcc musl-dev make nodejs
 
