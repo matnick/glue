@@ -1,6 +1,6 @@
-FROM tarantool/tarantool:2
+FROM tarantool/tarantool:1.x-centos7
 
-RUN apk add --no-cache tzdata git bash lua-dev gcc musl-dev make
+RUN yum install tzdata git bash lua-dev gcc musl-dev make nodejs
 
 RUN luarocks install inspect
 RUN luarocks install luasocket
