@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:edge
 
 RUN addgroup -S tarantool \
     && adduser -S -G tarantool tarantool \
