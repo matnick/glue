@@ -8,9 +8,9 @@ script:
   - docker exec -i tarantool_test mkdir -p ./logs
   - docker exec -i tarantool_test busted tests.lua
   - docker exec -i tarantool_test rm -rf ../test_db
-  - docker exec -i git clone https://github.com/glial-iot/glial.git
-  - docker exec -i cd glial
-  - docker exec -i make
+  - docker exec -i tarantool_test git clone https://github.com/glial-iot/glial.git
+  - docker exec -i tarantool_test cd glial
+  - docker exec -i tarantool_test make
   - git config --local user.name "matnick"
   - git config --local user.email "matuhin86@gmail.com"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
