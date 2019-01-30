@@ -1,6 +1,6 @@
 FROM tarantool/tarantool:1.x-centos7
 
-RUN yum install tzdata git bash lua-dev gcc musl-dev make nodejs
+RUN yum install -y tzdata git bash lua-dev gcc musl-dev make nodejs
 
 RUN luarocks install inspect
 RUN luarocks install luasocket
