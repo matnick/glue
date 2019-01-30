@@ -1,4 +1,5 @@
 language: lua
+sudo: required
 
 before_install:
   - docker build -t nokia_tarantool ./
