@@ -1,5 +1,6 @@
 FROM spk1/tarantool
 
+RUN apt-get install sudo
 RUN sudo apt-get update && sudo apt-get install -y tzdata git bash lua-dev gcc musl-dev make nodejs
 
 RUN luarocks install inspect
