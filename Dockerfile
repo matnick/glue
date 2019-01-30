@@ -1,7 +1,6 @@
-FROM spk1/tarantool
+FROM tarantool/tarantool:2
 
-RUN apt-get install sudo
-RUN sudo apt-get update && sudo apt-get install -y tzdata git bash lua-dev gcc musl-dev make nodejs
+RUN apk add --no-cache tzdata git bash lua-dev gcc musl-dev make
 
 RUN luarocks install inspect
 RUN luarocks install luasocket
