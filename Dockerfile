@@ -1,6 +1,6 @@
-FROM tarantool/tarantool:1.10.2
+FROM spk1/tarantool
 
-RUN apk add --no-cache tzdata git bash lua-dev gcc musl-dev make nodejs-current
+RUN apt-get update && apt-get install -y tzdata git bash lua-dev gcc musl-dev make nodejs-current
 
 RUN luarocks install inspect
 RUN luarocks install luasocket
