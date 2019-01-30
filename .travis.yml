@@ -28,11 +28,3 @@ deploy:
     token: $PACKAGECLOUD_KEY
     package_glob: "*.deb"
     dist: "ubuntu/precise"
-
-    provider: releases
-    skip_cleanup: true
-    api_key: $GITHUB_OAUTH_MATNICK
-    file_glob: true
-    file: "*.deb"
-    on:
-      tags: true
