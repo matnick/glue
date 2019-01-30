@@ -17,6 +17,6 @@ deploy:
     skip_cleanup: true
     repository: "Glial"
     username: "matuhin86"
-    token: $GITHUB_OAUTH_MATNICK
+    token: GITHUB_OAUTH_MATNICK
     package_glob: *.deb
     dist: "ubuntu/precise"
