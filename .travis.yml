@@ -1,4 +1,4 @@
-language: lua
+language: с
 sudo: required
 
 before_install:
