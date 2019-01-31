@@ -23,7 +23,16 @@ deploy:
     repository: "Glial"
     username: "matuhin86"
     token: $PACKAGECLOUD_KEY
-    package_glob: "*.deb"
+    package_glob: "glial/*.deb"
     dist: "ubuntu/precise"
     on:
+      branch: deploy
+
+    provider: releases
+    skip_cleanup: true
+    api_key: $GITHUB_OAUTH_MATNICK
+    file_glob: true
+    file: "glial/*.deb"
+    on:
+      tags: true
       branch: deploy
