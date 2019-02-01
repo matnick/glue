@@ -18,7 +18,7 @@ script:
   - git tag $TRAVIS_TAG
 
 before_deploy:
-  - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
+  - echo ${DECRYPT_KEY} | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
   - gpg --batch --yes --import ./glial/keys.asc
   - echo $SIGN_KEY | gpg --passphrase-fd 0 -u FE560D0ECB33A48B --armor --detach-sig ./glial/glial*.deb
   - mkdir ./debian_rep && cd ./debian_rep
@@ -33,6 +33,12 @@ before_deploy:
   - git push --quiet --set-upstream origin-pages gh-pages
 
 deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master
 
     provider: releases
     skip_cleanup: true
