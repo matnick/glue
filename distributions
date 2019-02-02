@@ -1,0 +1,7 @@
+Origin: testdebianuser.github.io/test_deploy
+Label: testdebianuser.github.io/test_deploy
+Codename: stretch
+Architectures: amd64
+Components: main
+Description:  Glial test
+SignWith: FE560D0ECB33A48B
