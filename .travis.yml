@@ -35,7 +35,7 @@ before_deploy:
 deploy:
   provider: pages
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN
+  github-token: $GITHUB_OAUTH_MATNICK
   keep-history: true
   on:
     branch: master
