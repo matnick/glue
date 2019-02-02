@@ -24,6 +24,7 @@ before_deploy:
   - mkdir ./debian_rep && cd ./debian_rep
   - git config --global user.email "matuhin86@gmail.com" && git config --global user.name "Travis CI"
   - git init && git checkout -b gh-pages
+  - git pull && rm *
   - gpg --output PUBLIC.KEY --armor --export matuhin86@gmail.com
   - mv ../glial/glial*.deb ./
   - mv ../glial/glial*.deb.asc ./
