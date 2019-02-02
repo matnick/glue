@@ -28,7 +28,7 @@ before_deploy:
   - mv ../glial/glial*.deb ./
   - mv ../glial/glial*.deb.asc ./
   - git add --all
-  - git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
+  - git commit --message "Travis build $TRAVIS_BUILD_NUMBER"
   - git remote add origin-pages https://${TEST_DEBIAN_ACCOUNT_OAUTH}@github.com/testdebianuser/test_deploy.git > /dev/null 2>&1
   - git push --quiet --set-upstream origin-pages gh-pages
 
