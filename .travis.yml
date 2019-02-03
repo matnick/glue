@@ -18,6 +18,7 @@ script:
   - git tag $TRAVIS_TAG
 
 before_deploy:
+  - sudo apt-get update
   - sudo apt-get install -y reprepro
   - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
   - gpg --batch --yes --import ./glial/keys.asc
