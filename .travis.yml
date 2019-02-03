@@ -31,7 +31,6 @@ before_deploy:
   - mkdir conf
   - cp ../distributions ./conf
   - mv ../glial/glial*.deb ./
-  - mv ../glial/glial*.deb.asc ./
   - echo $SIGN_KEY | reprepro --basedir ./ includedeb stretch glial*.deb
   - gpg --output PUBLIC.KEY --armor --export matuhin86@gmail.com
   - git add --all
