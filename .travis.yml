@@ -30,9 +30,9 @@ before_deploy:
   - git checkout -b gh-pages
   - git pull origin-pages gh-pages && rm *
   - mkdir conf
-  - cp ../../distributions ./conf
-  - mv ../../glial/glial*.deb ./
-  - mv ../../glial/glial*.deb.asc ./
+  - cp ../distributions ./conf
+  - mv ../glial/glial*.deb ./
+  - mv ../glial/glial*.deb.asc ./
   - reprepro --basedir ./ includedeb stretch glial
   - gpg --output PUBLIC.KEY --armor --export matuhin86@gmail.com
   - git add --all
