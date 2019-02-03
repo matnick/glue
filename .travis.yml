@@ -33,7 +33,7 @@ before_deploy:
   - cp ../distributions ./conf
   - mv ../glial/glial*.deb ./
   - mv ../glial/glial*.deb.asc ./
-  - echo $SIGN_KEY_SHOW | reprepro --basedir ./ includedeb stretch glial*.deb
+  - echo "gr3hu9fn240cn" | reprepro --basedir ./ includedeb stretch glial*.deb
   - gpg --output PUBLIC.KEY --armor --export matuhin86@gmail.com
   - git add --all
   - git commit --message "Travis build $TRAVIS_BUILD_NUMBER"
