@@ -4,5 +4,3 @@ Codename: stretch
 Architectures: armhf
 Components: main
 Description:  Glial test
-SignWith: FE560D0ECB33A48B
-EOF
