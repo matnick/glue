@@ -22,7 +22,6 @@ before_deploy:
   - sudo apt-get install -y reprepro
   - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
   - gpg --batch --yes --import ./glial/keys.asc
-  - echo $SIGN_KEY | gpg --passphrase-fd 0 -u FE560D0ECB33A48B --armor --detach-sig ./glial/glial*.deb
   - mkdir ./debian_rep && cd ./debian_rep
   - git config --global user.email "matuhin86@gmail.com" && git config --global user.name "Travis CI"
   - git init
@@ -33,7 +32,7 @@ before_deploy:
   - cp ../distributions ./conf
   - mv ../glial/glial*.deb ./
   - mv ../glial/glial*.deb.asc ./
-  - reprepro --basedir ./ includedeb stretch glial*.deb
+  - echo $SIGN_KEY | reprepro --basedir ./ includedeb stretch glial*.deb
   - gpg --output PUBLIC.KEY --armor --export matuhin86@gmail.com
   - git add --all
   - git commit --message "Travis build $TRAVIS_BUILD_NUMBER"
