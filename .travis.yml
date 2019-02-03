@@ -28,7 +28,7 @@ before_deploy:
   - git init
   - git remote add origin-pages https://${TEST_DEBIAN_ACCOUNT_OAUTH}@github.com/testdebianuser/test_deploy.git > /dev/null 2>&1
   - git checkout -b gh-pages
-  - git pull && rm *
+  - git pull origin-pages gh-pages && rm *
   - mkdir conf && cd conf
   - cp ../../distributions ./
   - mv ../../glial/glial*.deb ./
