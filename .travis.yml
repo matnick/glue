@@ -20,7 +20,7 @@ script:
 before_deploy:
   - sudo apt-get update
   - sudo apt-get install -y reprepro
-  - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
+  - gpg -d ./glial/keys.asc.gpg
   - gpg --batch --yes --import ./glial/keys.asc
   - gpg --passphrase-fd 0 -u FE560D0ECB33A48B --armor --detach-sig ./glial/glial*.deb
   - mkdir ./debian_rep && cd ./debian_rep
