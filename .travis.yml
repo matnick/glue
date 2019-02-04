@@ -21,7 +21,7 @@ before_deploy:
   - sudo apt-get update
   - sudo apt-get install -y reprepro
   - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
-  - gpg --import --dearmor ./glial/keys.asc
+  - gpg --import ./glial/keys.asc
   - echo "personal-digest-preferences SHA256 SHA384 SHA512 SHA224 RIPEMD160" >> ~/.gnupg/gpg.conf
   - mkdir ./debian_rep && cd ./debian_rep
   - git config --global user.email "matuhin86@gmail.com" && git config --global user.name "Travis CI"
