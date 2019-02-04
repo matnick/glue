@@ -22,7 +22,7 @@ before_deploy:
   - sudo apt-get install -y reprepro
   - echo $DECRYPT_KEY | gpg --passphrase-fd 0 ./glial/keys.asc.gpg
   - gpg --batch --yes --import ./glial/keys.asc
-  - gpg --sign -u FE560D0ECB33A48B --armor --detach-sig ./glial/glial*.deb
+  - gpg --sign -u 1AA4D0B5A94D2C8A --armor --detach-sig ./glial/glial*.deb
   - mkdir ./debian_rep && cd ./debian_rep
   - git config --global user.email "matuhin86@gmail.com" && git config --global user.name "Travis CI"
   - git init
