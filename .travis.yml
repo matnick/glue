@@ -34,7 +34,7 @@ before_deploy:
   - mv ../glial/glial*.deb ./
   - mv ../glial/glial*.deb.asc ./
   - reprepro --basedir ./ includedeb stretch glial*.deb
-  - gpg --output PUBLIC.KEY --armor --export matuhin86@gmail.com
+  - gpg --output PUBLIC.KEY --armor --export 1AA4D0B5A94D2C8A
   - git add --all
   - git commit --message "Travis build $TRAVIS_BUILD_NUMBER"
   - git push --quiet --set-upstream origin-pages gh-pages
