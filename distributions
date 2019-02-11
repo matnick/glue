@@ -1,7 +1,7 @@
 Origin: testdebianuser.github.io/test_deploy
 Label: testdebianuser.github.io/test_deploy
 Codename: stretch
-Architectures: armhf
+Architectures: armhf amd64
 Components: main
 Description:  Glial test
 SignWith: 1AA4D0B5A94D2C8A
