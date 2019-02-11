@@ -39,10 +39,11 @@ before_deploy:
   - git push --quiet --set-upstream origin-pages gh-pages
 
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_OAUTH_MATNICK
-  keep-history: true
-  on:
-    branch: master
-    branch: deploy
+  provider: releases
+      skip_cleanup: true
+      api_key: $GITHUB_OAUTH_MATNICK
+      file_glob: true
+      file: "*.deb"
+      on:
+        tags: true
+        branch: deploy
